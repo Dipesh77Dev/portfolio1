@@ -312,8 +312,10 @@ export default function About () {
                           </span>
                           <span className={styles.itemBadge}>{edu.period}</span>
                         </div>
+                        <div className={styles.itemHeader1}>
                         <p className={styles.itemSub}>{edu.institution}</p>
                         <p className={styles.itemDetail}>▶ {edu.score}</p>
+                        </div>
                       </div>
                     ))}
                   </div>

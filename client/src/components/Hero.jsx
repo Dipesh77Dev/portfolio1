@@ -5,7 +5,7 @@ export default function Hero () {
   const roles = [
     'Web Developer',
     'Frontend Specialist',
-    'MERN Stack Developer',
+    'MERN Developer',
     // 'UI/UX & Motion Enthusiast'
   ]
 
