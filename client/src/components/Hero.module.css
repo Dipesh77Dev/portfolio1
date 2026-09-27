@@ -1,0 +1,453 @@
+:root {
+  --github-icon-color: var(--text-main, #0f172a);
+}
+
+.heroSection {
+  min-height: 88vh;
+  padding: 5.5rem 2rem 4rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 2.5rem;
+  position: relative;
+}
+
+/* DESKTOP ALIGNMENT: LEFT-ALIGNED BY DEFAULT */
+.textContent {
+  text-align: left;
+}
+
+.headingWrapper {
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.mainHeading {
+  font-size: clamp(2.2rem, 3.8vw, 3.6rem);
+  font-weight: 900;
+  color: var(--text-main);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.cursor {
+  color: #f97316;
+  font-weight: 400;
+  animation: blink 0.8s infinite;
+  margin-left: 4px;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.greeting {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.accentText {
+  color: #f97316;
+  font-weight: 800;
+}
+
+.subHeading {
+  font-size: 1.02rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 530px;
+  margin-bottom: 2rem;
+}
+
+.subHeading strong {
+  color: var(--text-main);
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+}
+
+.primaryBtn {
+  background: var(
+    --btn-gradient,
+    linear-gradient(135deg, #f97316 0%, #ea580c 100%)
+  );
+  color: #ffffff;
+  padding: 0.85rem 2.2rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 10px 20px rgba(249, 115, 22, 0.3);
+}
+
+.primaryBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 30px rgba(249, 115, 22, 0.45);
+}
+
+.iconBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color, #e2e8f0);
+  background: var(--bg-card, #ffffff);
+  color: var(--text-main, #1e293b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.iconBtn:hover {
+  background: #f97316;
+  color: #ffffff;
+  border-color: #f97316;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+}
+
+/* GLASS CARD - HOBBIES & BEYOND CODE */
+.glassCard {
+  position: relative;
+  background: var(--bg-card, rgba(255, 255, 255, 0.85));
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.08));
+  border-radius: 20px;
+  padding: 1.5rem;
+  max-width: 460px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+  transition: all 0.35s ease;
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+.glassCard:hover {
+  transform: translateY(-6px);
+  border-color: #f97316;
+  box-shadow: 0 25px 45px rgba(249, 115, 22, 0.15);
+}
+
+@keyframes floatCard {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.cardHeader {
+  margin-bottom: 0.65rem;
+}
+
+.badgeLabel {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.12);
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+.quoteText {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1.1rem;
+}
+
+.quoteText strong {
+  color: var(--text-main);
+}
+
+.authorTag {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.authorAvatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(249, 115, 22, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.authorName {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--text-main);
+}
+
+.authorRole {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* ORBIT CONTAINER & CENTER CODE CIRCLE */
+.visualContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.orbitContainer {
+  width: 450px;
+  height: 450px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbitContainer:hover .orbitItem,
+.orbitContainer:hover .iconBadge {
+  animation-play-state: paused !important;
+}
+
+.orbitRing {
+  position: absolute;
+  inset: 0;
+  border: 1.5px dashed rgba(249, 115, 22, 0.35);
+  border-radius: 50%;
+}
+
+.innerRing {
+  inset: 65px;
+  border-style: solid;
+  border-color: var(--border-color, rgba(0, 0, 0, 0.06));
+}
+
+.avatarWrapper {
+  width: 275px;
+  height: 275px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid var(--bg-card, #ffffff);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+  position: relative;
+  background: #0d1117;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.codeOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 17, 23, 0.94);
+  color: #38bdf8;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.3s ease;
+  overflow: hidden;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.codeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.65rem;
+}
+
+.codeTitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #f97316;
+  font-family: monospace;
+  width: 100%;
+  text-align: center;
+}
+
+.liveIndicator {
+  font-size: 0.58rem;
+  background: rgba(249, 115, 22, 0.2);
+  color: #f97316;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.codeBody {
+  font-family: monospace;
+  font-size: 0.74rem;
+  color: #a5f3fc;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  margin: 0;
+  max-width: 100%;
+  word-break: break-word;
+}
+
+/* ORBITING BADGES */
+.orbitItem {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 52px;
+  height: 52px;
+  margin-top: -26px;
+  margin-left: -26px;
+  animation: orbitRotate 22s linear infinite;
+  animation-delay: calc(var(--i) * -3.66s);
+}
+
+.iconBadge {
+  width: 52px;
+  height: 52px;
+  background: var(--bg-card, #ffffff);
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.12));
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+  animation: counterRotate 22s linear infinite;
+  animation-delay: calc(var(--i) * -3.66s);
+}
+
+.activeBadge {
+  border-color: #f97316 !important;
+  transform: scale(1.15);
+  box-shadow: 0 0 18px rgba(249, 115, 22, 0.45);
+}
+
+@keyframes orbitRotate {
+  from {
+    transform: rotate(0deg) translateX(210px);
+  }
+  to {
+    transform: rotate(360deg) translateX(210px);
+  }
+}
+
+@keyframes counterRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+/* MOBILE RESPONSIVE MEDIA QUERIES */
+@media (max-width: 968px) {
+  .heroSection {
+    grid-template-columns: 1fr;
+    padding-top: 4.5rem;
+  }
+
+  .textContent {
+    text-align: center;
+  }
+
+  .mainHeading {
+    justify-content: center;
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    white-space: normal;
+  }
+
+  .subHeading,
+  .glassCard {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Center pills and actions on mobile */
+  .actionButtons {
+    justify-content: center;
+  }
+
+  /* Orbit adjustments for mobile screens */
+  .orbitContainer {
+    width: 310px;
+    height: 310px;
+    margin-top: 1.5rem;
+  }
+
+  .avatarWrapper {
+    width: 190px;
+    height: 190px;
+  }
+
+  /* Fix circle text scaling and padding on mobile */
+  .codeOverlay {
+    padding: 0.75rem;
+  }
+
+  .codeTitle {
+    font-size: 0.75rem;
+  }
+
+  /* Hide AUTOPLAY badge on mobile as requested */
+  .liveIndicator {
+    display: none;
+  }
+
+  .codeBody {
+    font-size: 0.64rem;
+    line-height: 1.3;
+  }
+
+  @keyframes orbitRotate {
+    from {
+      transform: rotate(0deg) translateX(140px);
+    }
+    to {
+      transform: rotate(360deg) translateX(140px);
+    }
+  }
+}

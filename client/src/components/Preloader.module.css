@@ -1,0 +1,339 @@
+/* ROOT COLOR VARIABLES & LIGHT/DARK FALLBACKS */
+.preloaderOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background-color: #07090e;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  font-family: 'Fira Code', 'JetBrains Mono', Consolas, monospace;
+  user-select: none;
+  overflow: hidden;
+}
+
+/* BACKGROUND GRID EFFECT */
+.gridBackground {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+/* GLASSMORPHIC TERMINAL CARD */
+.loaderCard {
+  position: relative;
+  width: 100%;
+  max-width: 540px;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(234, 88, 12, 0.12);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.loaderCard:hover {
+  border-color: rgba(234, 88, 12, 0.3);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(234, 88, 12, 0.18);
+}
+
+/* WINDOW HEADER */
+.windowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  background: rgba(2, 6, 23, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.windowDots {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.red {
+  background: #ff5f56;
+}
+.yellow {
+  background: #ffbd2e;
+}
+.green {
+  background: #27c93f;
+}
+
+.windowTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  color: #f8fafc;
+}
+
+.codeIcon {
+  color: #ea580c;
+  font-weight: 800;
+  font-size: 0.95rem;
+  background: rgba(234, 88, 12, 0.15);
+  padding: 0.15rem 0.4rem;
+  border-radius: 6px;
+  border: 1px solid rgba(234, 88, 12, 0.3);
+}
+
+.developerName {
+  color: #f1f5f9;
+}
+
+.versionBadge {
+  font-size: 0.7rem;
+  color: #64748b;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* CONTENT CONTAINER */
+.loaderContent {
+  padding: 2rem 1.75rem 1.5rem 1.75rem;
+}
+
+/* TELEMETRY ROW */
+.telemetryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
+.stepIndicator {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #ea580c;
+  letter-spacing: 1.5px;
+  background: rgba(234, 88, 12, 0.1);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid rgba(234, 88, 12, 0.2);
+}
+
+.percentageBox {
+  display: flex;
+  align-items: baseline;
+  line-height: 1;
+}
+
+.percentValue {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #f8fafc;
+  font-family: 'Fira Code', monospace;
+}
+
+.percentSymbol {
+  font-size: 1rem;
+  color: #ea580c;
+  margin-left: 0.2rem;
+  font-weight: 700;
+}
+
+/* PROGRESS BAR */
+.barContainer {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.barFill {
+  height: 100%;
+  background: linear-gradient(90deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
+  border-radius: 10px;
+  position: relative;
+  transition: width 0.1s ease-out;
+}
+
+.barGlow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: 0 0 12px #ffffff, 0 0 20px #ea580c;
+  opacity: 0.8;
+}
+
+/* STATUS BLOCK */
+.statusBlock {
+  min-height: 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-bottom: 1.75rem;
+}
+
+.statusLabelRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.statusPulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ea580c;
+  box-shadow: 0 0 10px #ea580c;
+  animation: pulseGlow 1.2s infinite ease-in-out;
+  flex-shrink: 0;
+}
+
+.statusLabel {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  letter-spacing: 0.8px;
+}
+
+.statusSubtext {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin: 0;
+  padding-left: 1.1rem;
+  line-height: 1.4;
+}
+
+/* INTERACTIVE FOOTER */
+.interactiveFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hintText {
+  font-size: 0.72rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.keyBadge {
+  background: rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.skipBtn {
+  background: transparent;
+  border: 1px solid rgba(234, 88, 12, 0.4);
+  color: #ea580c;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.4rem 0.85rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.5px;
+}
+
+.skipBtn:hover {
+  background: #ea580c;
+  color: #ffffff;
+  box-shadow: 0 4px 15px rgba(234, 88, 12, 0.35);
+  border-color: #ea580c;
+}
+
+/* PULSE ANIMATION */
+@keyframes pulseGlow {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 640px) {
+  .loaderCard {
+    max-width: 100%;
+    border-radius: 14px;
+  }
+
+  .loaderContent {
+    padding: 1.5rem 1.25rem 1.25rem 1.25rem;
+  }
+
+  .windowHeader {
+    padding: 0.75rem 1rem;
+  }
+
+  .windowTitle {
+    font-size: 0.82rem;
+  }
+
+  .percentValue {
+    font-size: 1.8rem;
+  }
+
+  .statusLabel {
+    font-size: 0.8rem;
+  }
+
+  .statusSubtext {
+    font-size: 0.72rem;
+  }
+
+  .interactiveFooter {
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .hintText {
+    justify-content: center;
+  }
+
+  .skipBtn {
+    width: 100%;
+    padding: 0.55rem;
+  }
+}

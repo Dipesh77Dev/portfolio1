@@ -1,0 +1,187 @@
+/* Capability Matrix Tabs */
+.matrixSection {
+  padding: 6rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.matrixContainer {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: var(--card-shadow);
+  margin-top: 2rem;
+}
+
+.tabButtons {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.tabBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.activeTabBtn {
+  background: var(--bg-primary);
+  color: var(--accent-purple);
+  box-shadow: var(--card-shadow);
+}
+
+.tabContentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.tabTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: var(--text-main);
+}
+
+.tabDesc {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Feature Grid Cards */
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.storyCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.storyCard:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-purple);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--accent-purple);
+  font-weight: 600;
+}
+
+/* CLI Drawer */
+.cliSection {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  padding: 5rem 3rem;
+}
+
+.terminalBox {
+  background: #0d1117;
+  color: #c9d1d9;
+  font-family: var(--font-mono);
+  border-radius: 12px;
+  max-width: 900px;
+  margin: 2rem auto 0 auto;
+  border: 1px solid #30363d;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.terminalTop {
+  background: #161b22;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid #30363d;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+
+.terminalTitle {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: #8b949e;
+}
+
+.terminalBody {
+  padding: 1.5rem;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.cliOutput {
+  white-space: pre-wrap;
+  color: #58a6ff;
+  font-size: 0.9rem;
+}
+
+.cliForm {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cliPrompt {
+  color: #7ee787;
+  font-weight: bold;
+}
+
+.cliInput {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f0f6fc;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .tabContentGrid { grid-template-columns: 1fr; }
+  .matrixSection, .cliSection { padding: 4rem 1.5rem; }
+}

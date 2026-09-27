@@ -1,0 +1,418 @@
+/* LIGHT MODE DEFAULTS */
+:root {
+  --skills-bg: #ffffff;
+  --skills-text: #0f172a;
+  --skills-subtitle: #64748b;
+  --skills-card-bg: #ffffff;
+  --skills-card-hover-bg: #fffdfb;
+  --skills-card-border: #e2e8f0;
+  --skills-drawer-bg: #f8fafc;
+  --skills-pill-bg: #f1f5f9;
+  --skills-pill-border: #e2e8f0;
+  --skills-pill-text: #64748b;
+  --skills-line-color: rgba(234, 88, 12, 0.25);
+  --skills-code-bg: #0f172a;
+  --skills-code-header: #1e293b;
+}
+
+/* DARK MODE OVERRIDES */
+[data-theme='dark'] .skillsSection,
+body.dark-mode .skillsSection,
+.dark .skillsSection {
+  --skills-bg: #0b0f17;
+  --skills-text: #ffffff;
+  --skills-subtitle: #94a3b8;
+  --skills-card-bg: #111827;
+  --skills-card-hover-bg: #161e2e;
+  --skills-card-border: rgba(255, 255, 255, 0.08);
+  --skills-drawer-bg: #0d131f;
+  --skills-pill-bg: rgba(255, 255, 255, 0.04);
+  --skills-pill-border: rgba(255, 255, 255, 0.08);
+  --skills-pill-text: #94a3b8;
+  --skills-line-color: rgba(249, 115, 22, 0.35);
+  --skills-code-bg: #070a0f;
+  --skills-code-header: #111827;
+}
+
+.skillsSection {
+  background-color: var(--skills-bg);
+  color: var(--skills-text);
+  padding: 6rem 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
+
+  /* Initial state for smooth fade up */
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.skillsSection.visible {
+  animation: sectionFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* HEADER CONTINUITY WITH 'ABOUT' SECTION */
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.title {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  color: var(--skills-text);
+  letter-spacing: 1px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.orangeText {
+  color: #ea580c;
+}
+
+.headerBar {
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #ea580c, #f97316);
+  border-radius: 4px;
+  margin: 0.8rem 0 1.2rem 0;
+}
+
+.subtitle {
+  color: var(--skills-subtitle);
+  font-size: 1rem;
+  max-width: 680px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* MATRIX GROUPS */
+.matrixWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.categoryGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateY(15px);
+}
+
+.visible .categoryGroup {
+  animation: categoryFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.categoryLabel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.82rem;
+  color: #ea580c;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.categoryLine {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--skills-line-color), transparent);
+}
+
+.rowsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* OPTIMIZED SKILL ITEM ROW & HOVER STATES */
+.skillRowWrapper {
+  background: var(--skills-card-bg);
+  border: 1px solid var(--skills-card-border);
+  border-radius: 12px;
+  overflow: hidden;
+  /* Specific GPU properties instead of transition: all to fix scroll lag */
+  transition: border-color 0.25s ease, background-color 0.25s ease,
+    box-shadow 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  /* Prevents element bounds jump when mouse rests on top/bottom edges */
+  transform: translateZ(0);
+}
+
+.skillRowWrapper:hover {
+  border-color: rgba(234, 88, 12, 0.5);
+  background: var(--skills-card-hover-bg);
+  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.08);
+}
+
+.activeRowWrapper {
+  border-color: #ea580c !important;
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.12) !important;
+}
+
+.skillRowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  cursor: pointer;
+  gap: 1rem;
+}
+
+.nameBlock {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1.4;
+  min-width: 240px;
+}
+
+.indicatorSymbol {
+  color: #ea580c;
+  font-size: 0.8rem;
+  transition: transform 0.25s ease;
+}
+
+.skillRowWrapper:hover .indicatorSymbol {
+  transform: translateX(3px);
+}
+
+.skillTitle {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--skills-text);
+}
+
+.pillsBlock {
+  flex: 2;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.pill {
+  background: var(--skills-pill-bg);
+  border: 1px solid var(--skills-pill-border);
+  color: var(--skills-pill-text);
+  font-size: 0.75rem;
+  font-family: 'Fira Code', monospace;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.metricsBlock {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 180px;
+}
+
+.expBadge {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: #ea580c;
+  background: rgba(234, 88, 12, 0.1);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  border: 1px solid rgba(234, 88, 12, 0.25);
+}
+
+.progressTrack {
+  width: 70px;
+  height: 6px;
+  background: var(--skills-pill-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #f97316, #ea580c);
+  transition: width 0.5s ease-out;
+}
+
+.levelNum {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--skills-text);
+  width: 35px;
+}
+
+/* SMOOTH ACCORDION DRAWER EXPANSION */
+.drawerWrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  border-top: 1px solid transparent;
+}
+
+.drawerExpanded {
+  grid-template-rows: 1fr;
+  border-top-color: rgba(234, 88, 12, 0.25);
+}
+
+.drawerInner {
+  overflow: hidden;
+  background: var(--skills-drawer-bg);
+  transition: background 0.35s ease;
+}
+
+.drawerGrid {
+  padding: 1.8rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.8rem;
+}
+
+.drawerHeading {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.78rem;
+  color: #ea580c;
+  margin: 0 0 1rem 0;
+  letter-spacing: 1px;
+}
+
+.specList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.specList li {
+  font-size: 0.88rem;
+  color: var(--skills-text);
+  opacity: 0.9;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.listBullet {
+  color: #ea580c;
+  font-family: 'Fira Code', monospace;
+}
+
+.allPillsRow {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.subPill {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: var(--skills-subtitle);
+}
+
+/* CODE TERMINAL */
+.codeColumn {
+  background: var(--skills-code-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.terminalHeader {
+  background: var(--skills-code-header);
+  padding: 0.5rem 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.termTitle {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.termTag {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.68rem;
+  color: #ea580c;
+}
+
+.codeBlock {
+  margin: 0;
+  padding: 1rem;
+  overflow-x: auto;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.78rem;
+  color: #4ade80;
+  line-height: 1.5;
+}
+
+/* ENTRANCE KEYFRAMES */
+@keyframes sectionFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes categoryFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RESPONSIVE LAYOUT */
+@media (max-width: 900px) {
+  .drawerGrid {
+    grid-template-columns: 1fr;
+  }
+  .pillsBlock {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .skillRowHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .metricsBlock {
+    width: 100%;
+    justify-content: space-between;
+    min-width: auto;
+  }
+
+  .progressTrack {
+    flex: 1;
+    margin: 0 0.5rem;
+  }
+}

@@ -1,0 +1,299 @@
+/* LIGHT MODE DEFAULTS */
+:root {
+  --exp-bg: #f8fafc;
+  --exp-text: #0f172a;
+  --exp-subtitle: #64748b;
+  --exp-card-bg: #ffffff;
+  --exp-card-border: #e2e8f0;
+  --exp-track-base: rgba(226, 232, 240, 0.8);
+  --exp-badge-bg: rgba(2, 132, 199, 0.1);
+  --exp-badge-border: rgba(2, 132, 199, 0.25);
+  --exp-badge-text: #0284c7;
+}
+
+/* DARK MODE OVERRIDES */
+[data-theme='dark'] .section,
+body.dark-mode .section,
+.dark .section {
+  --exp-bg: #0b0f17;
+  --exp-text: #ffffff;
+  --exp-subtitle: #94a3b8;
+  --exp-card-bg: #111827;
+  --exp-card-border: rgba(255, 255, 255, 0.08);
+  --exp-track-base: rgba(255, 255, 255, 0.1);
+  --exp-badge-bg: rgba(56, 189, 248, 0.1);
+  --exp-badge-border: rgba(56, 189, 248, 0.25);
+  --exp-badge-text: #38bdf8;
+}
+
+.section {
+  background-color: var(--exp-bg);
+  color: var(--exp-text);
+  padding: 6rem 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* SECTION HEADER CONTINUITY */
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.sectionTag {
+  font-family: 'Fira Code', monospace;
+  color: #ea580c;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.title {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  font-weight: 900;
+  color: var(--exp-text);
+  letter-spacing: 1px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.orangeText {
+  color: #ea580c;
+}
+
+.headerBar {
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #ea580c, #f97316);
+  border-radius: 4px;
+  margin: 0.8rem 0 1.2rem 0;
+}
+
+.subtitle {
+  color: var(--exp-subtitle);
+  font-size: 1rem;
+  max-width: 650px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* TIMELINE LAYOUT */
+.timelineWrapper {
+  position: relative;
+  display: flex;
+  gap: 2.5rem;
+}
+
+/* LEFT VERTICAL TRACK */
+.verticalTrack {
+  position: relative;
+  width: 2px;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.lineBase {
+  position: absolute;
+  top: 24px;
+  bottom: 24px;
+  left: 0;
+  width: 2px;
+  background: var(--exp-track-base);
+}
+
+.lineProgress {
+  position: absolute;
+  top: 24px;
+  left: 0;
+  width: 2px;
+  height: 0%;
+  background: #f97316;
+  box-shadow: 0 0 8px rgba(249, 115, 22, 0.8);
+}
+
+/* CARDS LIST */
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
+}
+
+.timelineItem {
+  position: relative;
+}
+
+/* NODE CIRCLE */
+.nodeCircle {
+  position: absolute;
+  left: -2.5rem;
+  top: 24px;
+  transform: translate(-50%, -50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  border: 2px solid #ffffff;
+  z-index: 3;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.activeState .nodeCircle {
+  background: #f97316;
+  border-color: #ffffff;
+  box-shadow: 0 0 10px #f97316;
+  animation: circleBlink 1.5s infinite ease-in-out;
+}
+
+@keyframes circleBlink {
+  0%,
+  100% {
+    box-shadow: 0 0 6px #f97316, 0 0 0 0px rgba(249, 115, 22, 0.5);
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    box-shadow: 0 0 14px #f97316, 0 0 0 6px rgba(249, 115, 22, 0);
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+/* CARD CONTAINER & TRACING BORDER */
+.cardBox {
+  position: relative;
+  width: 100%;
+  border-radius: 12px;
+  background: var(--exp-card-bg);
+  border: 1px solid var(--exp-card-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  transform: translateZ(0);
+}
+
+.cardBox:hover {
+  border-color: rgba(234, 88, 12, 0.4);
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.1);
+  transform: translateY(-2px);
+}
+
+.svgBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.boxPath {
+  fill: none;
+  stroke: #f97316;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0px 0px 4px rgba(249, 115, 22, 0.6));
+}
+
+/* CARD INNER DETAILS */
+.cardInner {
+  padding: 1.8rem;
+  opacity: 0.35;
+  transform: translateY(8px);
+  will-change: opacity, transform;
+}
+
+.activeState .cardBox {
+  border-color: rgba(234, 88, 12, 0.5);
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.12), 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.roleTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--exp-text);
+  margin: 0;
+}
+
+.companyName {
+  color: #ea580c;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-top: 0.3rem;
+}
+
+.dateBadge {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--exp-badge-text);
+  background: var(--exp-badge-bg);
+  border: 1px solid var(--exp-badge-border);
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+}
+
+.bulletList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.bulletList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: var(--exp-text);
+  opacity: 0.9;
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.bulletIcon {
+  color: #ea580c;
+  font-size: 0.75rem;
+  margin-top: 0.2rem;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 600px) {
+  .timelineWrapper {
+    gap: 1.2rem;
+  }
+
+  .verticalTrack {
+    margin-left: 4px;
+  }
+
+  .nodeCircle {
+    left: -1.2rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

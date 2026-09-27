@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* Default Light Mode Palette */
+:root {
+  /* Alternating Section Backgrounds */
+  --bg-white: #ffffff; /* Pure White Section Background */
+  --bg-light-grey: #f8fafc; /* Subtle Off-White / Light Grey Section Background */
+
+  --bg-primary: var(--bg-light-grey);
+  --bg-secondary: var(--bg-white);
+  --bg-card: #ffffff;
+
+  /* Text Hierarchy Colors */
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+
+  /* Brand Accent Colors */
+  --accent-purple: #6366f1;
+  --accent-pink: #ec4899;
+  --accent-cyan: #0d9488;
+
+  /* Button Gradients & Solid Tokens */
+  --btn-gradient: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+  --btn-gradient-hover: linear-gradient(135deg, #4f46e5 0%, #db2777 100%);
+  --btn-solid: #6366f1;
+  --btn-solid-hover: #4f46e5;
+  --btn-solid-text: #ffffff;
+
+  /* Utilities & Glassmorphic Effects */
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05),
+    0 2px 6px -1px rgba(0, 0, 0, 0.02);
+
+  /* TYPOGRAPHY FAMILY SEPARATION */
+  --font-heading: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Layout & Spacing Tokens */
+  --max-width: 1200px;
+  --container-padding: clamp(1rem, 4vw, 2.5rem);
+}
+
+/* Dark Mode Theme Overrides */
+[data-theme='dark'] {
+  --bg-white: #0d0f17;
+  --bg-light-grey: #080a10;
+
+  --bg-primary: var(--bg-light-grey);
+  --bg-secondary: var(--bg-white);
+  --bg-card: #16161f;
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: rgba(255, 255, 255, 0.08);
+
+  --accent-purple: #7928ca;
+  --accent-pink: #ff0080;
+  --accent-cyan: #00dfd8;
+
+  --btn-gradient: linear-gradient(135deg, #7928ca 0%, #ff0080 100%);
+  --btn-gradient-hover: linear-gradient(135deg, #6b21a8 0%, #d9006c 100%);
+  --btn-solid: #7928ca;
+  --btn-solid-hover: #6b21a8;
+
+  --glass-bg: rgba(22, 22, 31, 0.75);
+  --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* BASE BODY TYPOGRAPHY (PARAGRAPHS, LISTS & TEXT) */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* HEADINGS TYPOGRAPHY (EXPLICIT HEADING FONT) */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 800;
+}
+h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+}
+h3 {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+}
+h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* PARAGRAPHS & LISTS STYLING */
+p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+ul,
+ol {
+  font-family: var(--font-body);
+  padding-left: 1.25rem;
+}
+
+li {
+  font-family: var(--font-body);
+  color: var(--text-main);
+  margin-bottom: 0.4rem;
+  line-height: 1.6;
+}
+
+/* SECTION BACKGROUND UTILITY CLASSES */
+.section-white {
+  background-color: var(--bg-white);
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+}
+
+.section-grey {
+  background-color: var(--bg-light-grey);
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/* REUSABLE BUTTON UTILITY CLASSES */
+.btn-gradient {
+  background: var(--btn-gradient);
+  color: #ffffff;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 10px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-gradient:hover {
+  background: var(--btn-gradient-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+}
+
+.btn-solid {
+  background-color: var(--btn-solid);
+  color: var(--btn-solid-text);
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 10px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-solid:hover {
+  background-color: var(--btn-solid-hover);
+  transform: translateY(-2px);
+}
+
+/* Custom Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+[data-theme='dark'] ::-webkit-scrollbar-thumb {
+  background: #262635;
+}
+
