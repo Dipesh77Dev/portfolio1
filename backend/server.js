@@ -13,7 +13,11 @@ if (process.env.MONGO_URI) {
 const app = express();
 
 // Middleware
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: '*', // Allows requests from your live Netlify frontend
+  methods: ['GET', 'POST']
+}));
 app.use(express.json());
 
 // API Routes
