@@ -137,17 +137,15 @@ body.dark-mode .skillsSection,
   gap: 0.8rem;
 }
 
-/* OPTIMIZED SKILL ITEM ROW & HOVER STATES */
+/* SKILL ITEM ROW */
 .skillRowWrapper {
   background: var(--skills-card-bg);
   border: 1px solid var(--skills-card-border);
   border-radius: 12px;
   overflow: hidden;
-  /* Specific GPU properties instead of transition: all to fix scroll lag */
   transition: border-color 0.25s ease, background-color 0.25s ease,
     box-shadow 0.25s ease;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
-  /* Prevents element bounds jump when mouse rests on top/bottom edges */
   transform: translateZ(0);
 }
 
@@ -169,6 +167,7 @@ body.dark-mode .skillsSection,
   padding: 1.2rem 1.5rem;
   cursor: pointer;
   gap: 1rem;
+  user-select: none;
 }
 
 .nameBlock {
@@ -254,12 +253,14 @@ body.dark-mode .skillsSection,
   width: 35px;
 }
 
-/* SMOOTH ACCORDION DRAWER EXPANSION */
+/* ACCORDION DRAWER EXPANSION */
 .drawerWrapper {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s ease;
   border-top: 1px solid transparent;
+  overflow: hidden;
 }
 
 .drawerExpanded {
@@ -269,8 +270,14 @@ body.dark-mode .skillsSection,
 
 .drawerInner {
   overflow: hidden;
+  min-height: 0;
   background: var(--skills-drawer-bg);
-  transition: background 0.35s ease;
+  opacity: 0;
+  transition: opacity 0.25s ease, background-color 0.35s ease;
+}
+
+.drawerExpanded .drawerInner {
+  opacity: 1;
 }
 
 .drawerGrid {

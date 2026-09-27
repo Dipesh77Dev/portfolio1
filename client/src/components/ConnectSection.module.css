@@ -245,7 +245,7 @@ body.dark-mode .section,
 }
 
 .infoValue {
-  font-size: 0.70rem;
+  font-size: 0.7rem;
   font-weight: 700;
   color: var(--conn-text);
   word-break: break-all;
@@ -430,5 +430,97 @@ body.dark-mode .section,
 
   .terminalBody {
     min-height: 220px;
+  }
+}
+
+/* MOBILE RESPONSIVE FIXES (≤ 600px) */
+@media (max-width: 600px) {
+  /* Reduce outer container padding */
+  .container {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+  }
+
+  .sectionHeader {
+    margin-bottom: 2rem;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  /* Make form inputs and buttons full width on small screens */
+  .inputGroup {
+    grid-template-columns: 1fr;
+  }
+
+  .submitBtn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Stack Email & Phone Cards cleanly vertically */
+  .infoCardsGroup {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .infoCard {
+    padding: 0.85rem 1rem;
+  }
+
+  .infoValue {
+    font-size: 0.8rem;
+    word-break: break-word;
+  }
+
+  /* Center social icons bar on small screens */
+  .socialGroup {
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .socialBtn {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* Terminal fixes for compact mobile viewports */
+  .terminalBody {
+    padding: 0.85rem;
+    min-height: 200px;
+  }
+
+  .cliForm {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  /* Shorten terminal prompt display on mobile */
+  .cliPrompt {
+    font-size: 0.75rem;
+  }
+
+  .cliInput {
+    font-size: 0.75rem;
+    min-width: 120px;
+  }
+
+  /* Terminal footer chips layout */
+  .terminalFooter {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.65rem 0.85rem;
+  }
+
+  .chipGroup {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .chipBtn {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.7rem;
   }
 }

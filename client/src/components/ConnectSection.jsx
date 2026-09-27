@@ -81,7 +81,7 @@ export default function ConnectSection () {
         break
       case 'projects':
         response =
-          '1. Interactive 3D Architectural Showcase\n2. MERN Stack Web Applications\n3. Portfolio Command Center'
+          '1. Interactive Websites - Mindscan, Nemera, CleanHedge, Kirtanlal\n2. MERN Stack Web Applications'
         break
       case 'contact':
         response = 'Email: rajpersonal777@gmail.com | Phone: +91 9607745035'
@@ -407,8 +407,22 @@ export default function ConnectSection () {
                 ))}
 
                 {/* CLI INPUT */}
-                <form onSubmit={handleFormSubmit} className={styles.cliForm}>
+                {/* <form onSubmit={handleFormSubmit} className={styles.cliForm}>
                   <span className={styles.cliPrompt}>guest@dipesh-dev:~$</span>
+                  <input
+                    type='text'
+                    className={styles.cliInput}
+                    value={input}
+                    disabled={isTyping}
+                    onChange={e => setInput(e.target.value)}
+                    placeholder={
+                      isTyping ? '' : "Type 'help' and press Enter..."
+                    }
+                  />
+                </form> */}
+                {/* CLI INPUT */}
+                <form onSubmit={handleFormSubmit} className={styles.cliForm}>
+                  <span className={styles.cliPrompt}>dev:~$</span>
                   <input
                     type='text'
                     className={styles.cliInput}

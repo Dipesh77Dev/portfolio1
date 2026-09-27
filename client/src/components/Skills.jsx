@@ -10,7 +10,7 @@ const categories = [
         id: 'react-eco',
         name: 'React.js & Ecosystem',
         level: '92%',
-        experience: '3+ Yrs',
+        experience: '1 Year',
         pills: ['Hooks', 'Context API', 'Virtual DOM', 'SPA Architecture'],
         specs: [
           'Custom hooks, global state management, and component profiling.',
@@ -41,7 +41,7 @@ const categories = [
         id: 'javascript-es6',
         name: 'JavaScript (ES6+)',
         level: '90%',
-        experience: '3+ Yrs',
+        experience: '2+ Yrs',
         pills: ['Async/Await', 'Promises', 'DOM Engine', 'ES Modules'],
         specs: [
           'Asynchronous execution control, closures, and scoping.',
@@ -60,7 +60,7 @@ const categories = [
         id: 'node-express',
         name: 'Node.js & Express.js',
         level: '82%',
-        experience: '2+ Yrs',
+        experience: '1 Year',
         pills: [
           'REST API',
           'Middleware Pipelines',
@@ -78,7 +78,7 @@ const categories = [
         id: 'ejs-ssr',
         name: 'EJS Template Engine',
         level: '85%',
-        experience: '2+ Yrs',
+        experience: '1 Year',
         pills: ['SSR', 'Dynamic Views', 'Layout Partials'],
         specs: [
           'Server-side dynamic template rendering with Node.js.',
@@ -91,7 +91,7 @@ const categories = [
         id: 'databases',
         name: 'Databases (MongoDB & MySQL)',
         level: '80%',
-        experience: '2+ Yrs',
+        experience: '1 Year',
         pills: ['Mongoose', 'Schema Design', 'SQL Queries', 'CRUD Operations'],
         specs: [
           'Designing structured document collections in MongoDB and relational schemas in MySQL.',
@@ -155,18 +155,14 @@ const categories = [
 
 export default function SkillsBlueprint () {
   const [activeSkillId, setActiveSkillId] = useState('react-eco')
-  const [hoveredSkillId, setHoveredSkillId] = useState(null)
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef(null)
-
-  const currentSkillId = hoveredSkillId || activeSkillId
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true)
-          // Unobserve once rendered so scrolling back up/down doesn't re-trigger recalculations
           if (sectionRef.current) {
             observer.unobserve(sectionRef.current)
           }
@@ -182,6 +178,10 @@ export default function SkillsBlueprint () {
     return () => observer.disconnect()
   }, [])
 
+  const handleToggle = id => {
+    setActiveSkillId(prev => (prev === id ? null : id))
+  }
+
   return (
     <section
       ref={sectionRef}
@@ -189,7 +189,7 @@ export default function SkillsBlueprint () {
       id='skills'
     >
       <div className={styles.container}>
-        {/* Section Header matching 'About' Continuity */}
+        {/* Section Header */}
         <div className={styles.sectionHeader}>
           <h2 className={styles.title}>
             TECHNICAL <span className={styles.orangeText}>SKILLS</span>
@@ -217,7 +217,7 @@ export default function SkillsBlueprint () {
 
               <div className={styles.rowsContainer}>
                 {cat.skills.map(skill => {
-                  const isActive = currentSkillId === skill.id
+                  const isActive = activeSkillId === skill.id
 
                   return (
                     <div
@@ -225,19 +225,11 @@ export default function SkillsBlueprint () {
                       className={`${styles.skillRowWrapper} ${
                         isActive ? styles.activeRowWrapper : ''
                       }`}
-                      onMouseEnter={() => setHoveredSkillId(skill.id)}
-                      onMouseLeave={() => setHoveredSkillId(null)}
                     >
                       {/* Row Main Header */}
                       <div
                         className={styles.skillRowHeader}
-                        onClick={() =>
-                          setActiveSkillId(
-                            isActive && activeSkillId === skill.id
-                              ? null
-                              : skill.id
-                          )
-                        }
+                        onClick={() => handleToggle(skill.id)}
                       >
                         <div className={styles.nameBlock}>
                           <span className={styles.indicatorSymbol}>
