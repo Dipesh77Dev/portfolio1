@@ -265,10 +265,37 @@
   background: rgba(249, 115, 22, 0.12) !important;
 }
 
+/* TERMINAL HUD BODY */
 .terminalBody {
   padding: 1.25rem;
   font-family: 'Fira Code', monospace;
-  min-height: 200px;
+  height: 280px;            /* Fixes total height across all tabs */
+  overflow-y: auto;         /* Allows internal scroll for longer content */
+  box-sizing: border-box;
+}
+
+/* Custom scrollbar for terminal content */
+.terminalBody::-webkit-scrollbar {
+  width: 6px;
+}
+
+.terminalBody::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.terminalBody::-webkit-scrollbar-thumb {
+  background: rgba(249, 115, 22, 0.4);
+  border-radius: 3px;
+}
+
+.terminalBody::-webkit-scrollbar-thumb:hover {
+  background: rgba(249, 115, 22, 0.8);
+}
+
+@media (max-width: 600px) {
+  .terminalBody {
+    height: 320px; /* Slightly more room on mobile to account for text wrapping */
+  }
 }
 
 .terminalPrompt {

@@ -1,13 +1,15 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const visitorSchema = new mongoose.Schema({
   ip: { type: String, default: 'Anonymous' },
   city: { type: String, default: 'Unknown' },
   country: { type: String, default: 'Unknown' },
   userAgent: { type: String },
+  deviceInfo: { type: String },
   referrer: { type: String },
   timeSpentSeconds: { type: Number, default: 0 },
+  visitCount: { type: Number, default: 1 },
   visitedAt: { type: Date, default: Date.now }
-});
+})
 
-module.exports = mongoose.model('Visitor', visitorSchema);
+module.exports = mongoose.model('Visitor', visitorSchema)
