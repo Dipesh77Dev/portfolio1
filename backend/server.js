@@ -13,21 +13,22 @@ if (process.env.MONGO_URI) {
 const app = express()
 
 // Allowed Origins for CORS
+// Remove trailing slash if present in env variable
+const rawFrontendUrl = process.env.FRONTEND_URL
+  ? process.env.FRONTEND_URL.replace(/\/$/, '')
+  : ''
+
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  process.env.FRONTEND_URL // Netlify URL set in Render env vars (e.g., https://your-site.netlify.app)
+  'https://dipesh-portfolio1.netlify.app',
+  rawFrontendUrl
 ].filter(Boolean)
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, Postman, or server-to-server)
-      if (
-        !origin ||
-        allowedOrigins.includes(origin) ||
-        allowedOrigins.includes('*')
-      ) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true)
       } else {
         callback(new Error('CORS policy violation: Origin not allowed'))
@@ -50,9 +51,9 @@ app.get('/', (req, res) => {
 })
 
 // API Routes
-app.use('/api/tracking', require('./routes/trackingRoutes'));
-app.use('/api/chatbot', require('./routes/chatbotRoutes'));
-app.use('/api/contact', require('./routes/contactRoutes'));
+app.use('/api/tracking', require('./routes/trackingRoutes'))
+app.use('/api/chatbot', require('./routes/chatbotRoutes'))
+app.use('/api/contact', require('./routes/contactRoutes'))
 
 // Public Dev/Test API Route
 app.get('/api/dev/info', (req, res) => {
