@@ -178,10 +178,11 @@ export default function Footer () {
           <div className={styles.socialGroup}>
             {/* RESUME DOWNLOAD */}
             <a
-              href='/resume.pdf'
+              href='https://dipesh-devrukhkar-resume.tiiny.site'
               download
               className={styles.socialBtn}
               title='Download Resume'
+              target='_blank'
             >
               <svg
                 width='18'
@@ -199,7 +200,7 @@ export default function Footer () {
 
             {/* GITHUB */}
             <a
-              href='https://github.com'
+              href='https://github.com/Dipesh77Dev'
               target='_blank'
               rel='noreferrer'
               className={styles.socialBtn}
@@ -217,7 +218,7 @@ export default function Footer () {
 
             {/* LINKEDIN */}
             <a
-              href='https://linkedin.com'
+              href='https://www.linkedin.com/in/dipesh-devrukhkar-1aa912214/'
               target='_blank'
               rel='noreferrer'
               className={styles.socialBtn}
@@ -235,7 +236,7 @@ export default function Footer () {
 
             {/* INSTAGRAM */}
             <a
-              href='https://instagram.com'
+              href='https://www.instagram.com/dipesh_067/'
               target='_blank'
               rel='noreferrer'
               className={styles.socialBtn}
