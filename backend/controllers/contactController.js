@@ -44,6 +44,9 @@ exports.submitContactForm = async (req, res) => {
 
     // 1. SAVE TO MONGODB DATABASE
     const newContact = await Contact.create({ name, email, message })
+    const formattedDate = new Date().toLocaleString('en-IN', {
+      timeZone: 'Asia/Kolkata'
+    })
 
     // 2. SEND EMAIL NOTIFICATION VIA NODEMAILER
     const mailOptions = {
@@ -55,16 +58,17 @@ exports.submitContactForm = async (req, res) => {
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Message:</strong> ${message}</p>
-        <p><strong>Submitted At:</strong> ${new Date().toLocaleString('en-IN', {
-          timeZone: 'Asia/Kolkata'
-        })}</p>
-      `
+        <p><strong>Submitted At:</strong> ${formattedDate}</p>      
+        `
     }
 
-    const emailPromise = transporter.sendMail(mailOptions)
+    const emailPromise = transporter.sendMail(mailOptions).catch(err => {
+      console.error('Nodemailer Error:', err.message)
+    })
 
     // 3. APPEND ROW TO GOOGLE SHEET
     const sheetsPromise = (async () => {
+      if (!process.env.GOOGLE_SHEET_ID) return;
       const sheets = await getGoogleSheetsClient()
       await sheets.spreadsheets.values.append({
         spreadsheetId: process.env.GOOGLE_SHEET_ID,
@@ -76,12 +80,15 @@ exports.submitContactForm = async (req, res) => {
               name,
               email,
               message,
-              new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+              formattedDate
+              // new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
             ]
           ]
         }
       })
-    })();
+    })().catch(err => {
+      console.error('Google Sheets Error:', err.message);
+    });
 
     // 4. SEND WHATSAPP MESSAGE VIA TWILIO
     // const whatsappPromise = twilioClient.messages.create({
@@ -96,7 +103,7 @@ exports.submitContactForm = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: 'Message sent successfully across all channels!',
+      message: 'Message sent successfully!',
       data: newContact
     })
   } catch (error) {
