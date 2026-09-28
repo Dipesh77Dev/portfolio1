@@ -14,7 +14,11 @@ import ScrollToTop from './components/ScrollToTop'
 import VisitorTracker from './components/VisitorTracker'
 import Footer from './components/Footer'
 
+import useVisitorTracking from './hooks/useVisitorTracking';
+
 export default function App () {
+  useVisitorTracking();
+  
   const [loading, setLoading] = useState(true)
   const [theme, setTheme] = useState('light')
 
