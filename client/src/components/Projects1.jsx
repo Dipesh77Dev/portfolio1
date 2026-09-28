@@ -21,7 +21,6 @@ const projects = [
     tech: ['HTML5', 'CSS3', 'JavaScript', 'PHP Forms'],
     category: ['all', 'client', 'frontend'],
     link: 'https://www.mindscancentre.com/',
-    image: '/images/mindscan.webp',
     mockGradient: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
   },
   {
@@ -31,7 +30,6 @@ const projects = [
     tech: ['HTML5', 'CSS3', 'JavaScript', 'PHP Forms'],
     category: ['all', 'client', 'frontend'],
     link: 'https://www.nemera.com/',
-    image: '/images/nemera.webp',
     mockGradient: 'linear-gradient(135deg, #0284c7 0%, #0369a1 100%)'
   },
   {
@@ -41,8 +39,6 @@ const projects = [
     tech: ['MongoDB', 'Express.js', 'React.js', 'Node.js', 'REST API'],
     category: ['all', 'mern', 'frontend', 'backend'],
     link: 'https://contact-management-app-mern.netlify.app',
-    image: '/images/contact-management.webp',
-    // logo : '/logo/...'
     mockGradient: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)'
   },
   {
@@ -52,7 +48,6 @@ const projects = [
     tech: ['HTML5', 'CSS3', 'JavaScript', 'PHP Forms'],
     category: ['all', 'client', 'frontend'],
     link: 'https://clean-hedge.com/',
-    image: '/images/clean-hedge.webp',
     mockGradient: 'linear-gradient(135deg, #059669 0%, #047857 100%)'
   },
   {
@@ -62,7 +57,6 @@ const projects = [
     tech: ['React.js', 'JSON State Engine', 'Netlify Deployment'],
     category: ['all', 'frontend'],
     link: 'https://address-state.netlify.app',
-    image: '/images/address-management.webp',
     mockGradient: 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)'
   },
   {
@@ -72,19 +66,17 @@ const projects = [
     tech: ['HTML5', 'CSS3', 'JavaScript', 'PHP Forms'],
     category: ['all', 'client', 'frontend'],
     link: 'https://kirtanlal.ae/',
-    image: '/images/kirtanlal.webp',
     mockGradient: 'linear-gradient(135deg, #334155 0%, #1e293b 100%)'
   },
-  // {
-  //   id: 'ejs-product-manager',
-  //   title: 'EJS Product Manager',
-  //   desc: 'Server-side rendered CRUD platform featuring category filtering, database pagination, and schema relations.',
-  //   tech: ['Node.js', 'Express.js', 'MongoDB', 'EJS'],
-  //   category: ['all', 'backend'],
-  //   link: '#',
-  //   image: '',
-  //   mockGradient: 'linear-gradient(135deg, #475569 0%, #0f172a 100%)'
-  // }
+  {
+    id: 'ejs-product-manager',
+    title: 'EJS Product Manager',
+    desc: 'Server-side rendered CRUD platform featuring category filtering, database pagination, and schema relations.',
+    tech: ['Node.js', 'Express.js', 'MongoDB', 'EJS'],
+    category: ['all', 'backend'],
+    link: '#',
+    mockGradient: 'linear-gradient(135deg, #475569 0%, #0f172a 100%)'
+  }
 ]
 
 export default function Projects () {
@@ -97,6 +89,7 @@ export default function Projects () {
   )
 
   useEffect(() => {
+    // Fade in animation for section
     const ctx = gsap.context(() => {
       gsap.fromTo(
         sectionRef.current,
@@ -118,6 +111,7 @@ export default function Projects () {
   }, [])
 
   useEffect(() => {
+    // Re-trigger subtle stagger fade animation on filter switch
     if (gridRef.current) {
       gsap.fromTo(
         gridRef.current.children,
@@ -130,7 +124,7 @@ export default function Projects () {
   return (
     <section className={styles.section} id='projects' ref={sectionRef}>
       <div className={styles.container}>
-        {/* Section Header */}
+        {/* Section Header Continuity */}
         <div className={styles.sectionHeader}>
           <div className={styles.sectionTag}>// SELECTED WORKS</div>
           <h2 className={styles.title}>
@@ -143,7 +137,7 @@ export default function Projects () {
           </p>
         </div>
 
-        {/* Filter Tabs */}
+        {/* TAB FILTER BUTTONS */}
         <div className={styles.tabWrapper}>
           <div className={styles.tabContainer}>
             {TABS.map(tab => (
@@ -161,79 +155,64 @@ export default function Projects () {
           </div>
         </div>
 
-        {/* Projects Grid */}
+        {/* PROJECTS GRID */}
         <div className={styles.projectsGrid} ref={gridRef}>
-          {filteredProjects.map(proj => {
-            const isExternal = proj.link !== '#'
-            return (
-              <a
-                key={proj.id}
-                href={proj.link}
-                target={isExternal ? '_blank' : '_self'}
-                rel={isExternal ? 'noreferrer' : ''}
-                className={styles.card}
-              >
-                <div className={styles.topAccentLine}></div>
+          {filteredProjects.map(proj => (
+            <div key={proj.id} className={styles.card}>
+              <div className={styles.topAccentLine}></div>
 
-                {/* Browser Mockup Container */}
-                <div className={styles.snapshotContainer}>
-                  <div className={styles.browserHeader}>
-                    <div className={styles.browserDots}>
-                      <span className={styles.dotRed}></span>
-                      <span className={styles.dotYellow}></span>
-                      <span className={styles.dotGreen}></span>
-                    </div>
-                    <span className={styles.browserAddress}>
-                      {isExternal
-                        ? proj.link.replace('https://', '')
-                        : 'internal-build'}
+              {/* WEBSITE SNAPSHOT / BROWSER FRAME PREVIEW */}
+              <div className={styles.snapshotContainer}>
+                <div className={styles.browserHeader}>
+                  <div className={styles.browserDots}>
+                    <span className={styles.dotRed}></span>
+                    <span className={styles.dotYellow}></span>
+                    <span className={styles.dotGreen}></span>
+                  </div>
+                  <span className={styles.browserAddress}>
+                    {proj.link !== '#'
+                      ? proj.link.replace('https://', '')
+                      : 'internal-build'}
+                  </span>
+                </div>
+                <div
+                  className={styles.snapshotPreview}
+                  style={{ background: proj.mockGradient }}
+                >
+                  <div className={styles.previewOverlay}>
+                    <span className={styles.previewTitle}>{proj.title}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.cardContent}>
+                <div className={styles.projectHeader}>
+                  <span className={styles.projectFolder}>⚡</span>
+                  {proj.link !== '#' && (
+                    <a
+                      href={proj.link}
+                      target='_blank'
+                      rel='noreferrer'
+                      className={styles.projectLink}
+                    >
+                      Live Demo <span className={styles.arrow}>↗</span>
+                    </a>
+                  )}
+                </div>
+
+                <h3 className={styles.projectTitle}>{proj.title}</h3>
+                <p className={styles.projectDesc}>{proj.desc}</p>
+
+                <div className={styles.techStack}>
+                  {proj.tech.map((t, i) => (
+                    <span key={i} className={styles.techTag}>
+                      {t}
                     </span>
-                  </div>
-
-                  <div
-                    className={styles.snapshotPreview}
-                    style={{ background: proj.mockGradient }}
-                  >
-                    {proj.image ? (
-                      <img
-                        src={proj.image}
-                        alt={`${proj.title} homepage preview`}
-                        className={styles.snapshotImage}
-                        onError={e => {
-                          e.target.style.display = 'none'
-                        }}
-                      />
-                    ) : null}
-                    <div className={styles.previewFallbackOverlay}>
-                      <span className={styles.previewTitle}>{proj.title}</span>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-
-                {/* Card Main Body */}
-                <div className={styles.cardContent}>
-                  <div className={styles.projectHeader}>
-                    <h3 className={styles.projectTitle}>{proj.title}</h3>
-                    {isExternal && (
-                      <span className={styles.projectLink}>
-                        Live Demo <span className={styles.arrow}>↗</span>
-                      </span>
-                    )}
-                  </div>
-
-                  <p className={styles.projectDesc}>{proj.desc}</p>
-
-                  <div className={styles.techStack}>
-                    {proj.tech.map((t, i) => (
-                      <span key={i} className={styles.techTag}>
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </a>
-            )
-          })}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

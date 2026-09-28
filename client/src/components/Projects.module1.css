@@ -1,4 +1,4 @@
-/* LIGHT MODE DEFAULTS */
+/* LIGHT MODE DEFAULTS (WHITE BACKGROUND) */
 :root {
   --proj-bg: #ffffff;
   --proj-text: #0f172a;
@@ -39,7 +39,7 @@ body.dark-mode .section,
   margin: 0 auto;
 }
 
-/* SECTION HEADER */
+/* SECTION HEADER CONTINUITY */
 .sectionHeader {
   display: flex;
   flex-direction: column;
@@ -86,7 +86,7 @@ body.dark-mode .section,
   line-height: 1.6;
 }
 
-/* TAB BAR */
+/* TAB BAR SYSTEM */
 .tabWrapper {
   display: flex;
   justify-content: center;
@@ -130,14 +130,13 @@ body.dark-mode .section,
   font-weight: 700;
 }
 
-/* GRID & CARDS */
+/* PROJECTS GRID & CARDS */
 .projectsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
   gap: 2rem;
 }
 
-/* WHOLE CARD CLICKABLE & FLOATING HOVER EFFECT */
 .card {
   background: var(--proj-card-bg);
   border: 1px solid var(--proj-card-border);
@@ -147,11 +146,7 @@ body.dark-mode .section,
   position: relative;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-    box-shadow 0.35s ease, border-color 0.35s ease;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .topAccentLine {
@@ -166,7 +161,7 @@ body.dark-mode .section,
   z-index: 2;
 }
 
-/* BROWSER FRAME MOCKUP */
+/* WEBSITE SNAPSHOT MOCKUP FRAME */
 .snapshotContainer {
   width: 100%;
   border-bottom: 1px solid var(--proj-card-border);
@@ -216,30 +211,19 @@ body.dark-mode .section,
 }
 
 .snapshotPreview {
-  height: 180px;
+  height: 140px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
+  transition: transform 0.4s ease;
 }
 
-.snapshotImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-  transition: transform 0.5s ease;
-  z-index: 1;
-}
-
-.previewFallbackOverlay {
-  position: absolute;
+.previewOverlay {
   padding: 0.5rem 1rem;
   background: rgba(0, 0, 0, 0.35);
   backdrop-filter: blur(4px);
   border-radius: 6px;
-  z-index: 0;
 }
 
 .previewTitle {
@@ -247,46 +231,84 @@ body.dark-mode .section,
   font-family: 'Fira Code', monospace;
   font-size: 0.85rem;
   font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .cardContent {
-  padding: 1.5rem;
+  padding: 1.75rem;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+}
+
+/* HOVER EFFECTS */
+.card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(249, 115, 22, 0.4);
+  box-shadow: 0 20px 40px rgba(249, 115, 22, 0.12),
+    0 8px 16px rgba(0, 0, 0, 0.04);
+}
+
+.card:hover .topAccentLine {
+  opacity: 1;
+}
+
+.card:hover .snapshotPreview {
+  transform: scale(1.05);
 }
 
 .projectHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.75rem;
 }
 
-.projectTitle {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--proj-text);
-  margin: 0;
-  transition: color 0.25s ease;
+.projectFolder {
+  color: #ea580c;
+  font-size: 1.3rem;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .projectFolder {
+  transform: scale(1.2) rotate(10deg);
 }
 
 .projectLink {
   color: var(--proj-subtitle);
+  text-decoration: none;
   font-family: 'Fira Code', monospace;
   font-size: 0.82rem;
   font-weight: 600;
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  white-space: nowrap;
   transition: color 0.25s ease;
 }
 
 .arrow {
   display: inline-block;
   transition: transform 0.25s ease;
+}
+
+.projectLink:hover {
+  color: #ea580c;
+}
+
+.projectLink:hover .arrow {
+  transform: translate(2px, -2px);
+}
+
+.projectTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--proj-text);
+  margin: 0 0 0.6rem 0;
+  transition: color 0.25s ease;
+}
+
+.card:hover .projectTitle {
+  color: #ea580c;
 }
 
 .projectDesc {
@@ -312,31 +334,6 @@ body.dark-mode .section,
   border-radius: 6px;
   color: var(--proj-subtitle);
   transition: all 0.25s ease;
-}
-
-/* FLOATING HOVER ANIMATIONS */
-.card:hover {
-  transform: translateY(-10px);
-  border-color: rgba(249, 115, 22, 0.4);
-  box-shadow: 0 20px 40px rgba(249, 115, 22, 0.15),
-    0 8px 16px rgba(0, 0, 0, 0.06);
-}
-
-.card:hover .topAccentLine {
-  opacity: 1;
-}
-
-.card:hover .snapshotImage {
-  transform: scale(1.06);
-}
-
-.card:hover .projectTitle,
-.card:hover .projectLink {
-  color: #ea580c;
-}
-
-.card:hover .arrow {
-  transform: translate(3px, -3px);
 }
 
 .card:hover .techTag {

@@ -5,7 +5,7 @@ export default function Hero () {
   const roles = [
     'Web Developer',
     'Frontend Specialist',
-    'MERN Developer',
+    'MERN Developer'
     // 'UI/UX & Motion Enthusiast'
   ]
 
@@ -202,30 +202,36 @@ export default function Hero () {
           </a>
         </div>
 
-        {/* HOBBIES & BEYOND CODE CARD */}
+        {/* UPDATED: HOBBIES & BEYOND CODE CARD */}
         <div className={styles.glassCard}>
           <div className={styles.cardHeader}>
             <span className={styles.badgeLabel}>
               🎮 Beyond The Code &amp; Hobbies
             </span>
+            <span className={styles.pulseDot}></span>
           </div>
+
           <p className={styles.quoteText}>
             Besides full-stack development, I love diving into{' '}
             <strong>Game Testing</strong>, exploring{' '}
-            <strong>Digital Marketing strategies</strong>,
-            and <strong>experimenting with creative UI design trends.</strong>
+            <strong>Digital Marketing strategies</strong>, and{' '}
+            <strong>
+              experimenting with creative UI design &amp; motion graphics.
+            </strong>
           </p>
-          <div className={styles.authorTag}>
-            <div className={styles.authorAvatar}>
-              <span>⚡</span>
+
+          <div className={styles.pillsContainer}>
+            <div className={styles.pillItem}>
+              <span className={styles.pillIcon}>🕹️</span>
+              <span>Game Testing</span>
             </div>
-            <div>
-              <div className={styles.authorName}>
-                My Hobbies &amp; Interests
-              </div>
-              <div className={styles.authorRole}>
-                Game Testing • Marketing • Motion Graphics
-              </div>
+            <div className={styles.pillItem}>
+              <span className={styles.pillIcon}>📈</span>
+              <span>Digital Marketing</span>
+            </div>
+            <div className={styles.pillItem}>
+              <span className={styles.pillIcon}>🎬</span>
+              <span>Motion &amp; Video</span>
             </div>
           </div>
         </div>
