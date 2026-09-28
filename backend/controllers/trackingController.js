@@ -7,14 +7,40 @@ exports.trackVisitor = async (req, res) => {
     const { ip, city, country, userAgent, referrer, timeSpentSeconds } =
       req.body
 
-    const rawIp =
-      ip ||
-      req.headers['x-forwarded-for'] ||
-      req.socket.remoteAddress ||
-      'Anonymous'
+    // 1. Clean the IP Address (Extract only the primary client IP)
+    const headerIp =
+      req.headers['x-forwarded-for'] || req.socket.remoteAddress || ''
+    const rawIp = ip || headerIp || 'Anonymous'
+    const cleanIp = rawIp.split(',')[0].trim() // Takes the first real client IP
+
+    // 2. Fetch City & Country server-side if not provided by frontend
+    let finalCity = city || 'Unknown'
+    let finalCountry = country || 'Unknown'
+
+    if (
+      (finalCity === 'Unknown' || finalCountry === 'Unknown') &&
+      cleanIp &&
+      cleanIp !== '127.0.0.1' &&
+      cleanIp !== '::1' &&
+      cleanIp !== 'Anonymous'
+    ) {
+      try {
+        const geoRes = await fetch(
+          `http://ip-api.com/json/${cleanIp}?fields=status,country,city`
+        )
+        const geoData = await geoRes.json()
+        if (geoData.status === 'success') {
+          finalCity = geoData.city || finalCity
+          finalCountry = geoData.country || finalCountry
+        }
+      } catch (geoErr) {
+        console.error('Geo API lookup error:', geoErr.message)
+      }
+    }
+
     const rawUserAgent = userAgent || req.headers['user-agent'] || ''
 
-    // 1. Parse User Agent into readable Device / OS / Browser
+    // 3. Parse User Agent into readable Device / OS / Browser
     const parser = new UAParser(rawUserAgent)
     const uaResult = parser.getResult()
 
@@ -27,14 +53,14 @@ exports.trackVisitor = async (req, res) => {
 
     const deviceInfo = `${deviceType} (${osName} / ${browserName})`
 
-    // 2. Count existing visits for this IP address
-    const previousVisits = await Visitor.countDocuments({ ip: rawIp })
+    // 4. Count existing visits for this IP address
+    const previousVisits = await Visitor.countDocuments({ ip: cleanIp })
     const currentVisitCount = previousVisits + 1
 
     const visitorData = {
-      ip: rawIp,
-      city: city || 'Unknown',
-      country: country || 'Unknown',
+      ip: cleanIp,
+      city: finalCity,
+      country: finalCountry,
       userAgent: rawUserAgent,
       deviceInfo: deviceInfo,
       referrer: referrer || 'Direct Visit',
