@@ -50,8 +50,9 @@ app.get('/', (req, res) => {
 })
 
 // API Routes
-app.use('/api/tracking', require('./routes/trackingRoutes'))
-app.use('/api/chatbot', require('./routes/chatbotRoutes'))
+app.use('/api/tracking', require('./routes/trackingRoutes'));
+app.use('/api/chatbot', require('./routes/chatbotRoutes'));
+app.use('/api/contact', require('./routes/contactRoutes'));
 
 // Public Dev/Test API Route
 app.get('/api/dev/info', (req, res) => {

@@ -277,8 +277,8 @@
 
   .chatWindow {
     width: 85%;
-    height: 90%;
-    max-height: 90%;
+    height: 75%;
+    max-height: 150vh;
     border-radius: 20px 20px 0 0;
   }
 
@@ -286,4 +286,41 @@
     right: 1rem !important;
     bottom: 2rem !important;
   }
+}
+
+.msgContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.chipGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.2rem;
+  padding-left: 0.2rem;
+}
+
+.chipBtn {
+  background: rgba(0, 223, 216, 0.12);
+  border: 1px solid rgba(0, 223, 216, 0.35);
+  color: #00dfd8;
+  padding: 0.3rem 0.65rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chipBtn:hover {
+  background: rgba(0, 223, 216, 0.25);
+  border-color: #00dfd8;
+  transform: translateY(-1px);
+}
+
+.chipBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

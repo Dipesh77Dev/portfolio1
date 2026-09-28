@@ -40,13 +40,40 @@ export default function ConnectSection () {
     return () => ctx.revert()
   }, [])
 
-  const handleSubmit = e => {
+  // const handleSubmit = e => {
+  //   e.preventDefault()
+  //   setStatus('Sending...')
+  //   setTimeout(() => {
+  //     setStatus('Message sent successfully!')
+  //     setFormData({ name: '', email: '', message: '' })
+  //   }, 1200)
+  // }
+
+  const handleSubmit = async e => {
     e.preventDefault()
     setStatus('Sending...')
-    setTimeout(() => {
-      setStatus('Message sent successfully!')
-      setFormData({ name: '', email: '', message: '' })
-    }, 1200)
+
+    try {
+      const response = await fetch(`${API_URL}/api/contact/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        setStatus('Message sent successfully!')
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        setStatus(data.message || 'Failed to send message. Please try again.')
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setStatus('Error connecting to server. Please try again later.')
+    }
   }
 
   // --- TERMINAL LOGIC ---

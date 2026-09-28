@@ -1,9 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react'
 import styles from './Chatbot.module.css'
 
-// Dynamically uses VITE_API_URL from Netlify env, falling back to local or Render URL
 const API_URL =
   import.meta.env.VITE_API_URL || 'https://dipesh-portfolio-api.onrender.com'
+
+const DEFAULT_SUGGESTIONS = [
+  'About',
+  'Skills',
+  'Projects',
+  'Experience',
+  'Contact',
+]
 
 export default function Chatbot () {
   const [isOpen, setIsOpen] = useState(false)
@@ -23,7 +30,7 @@ export default function Chatbot () {
   const [loading, setLoading] = useState(false)
   const messagesEndRef = useRef(null)
 
-  // LOCK BACKGROUND SCROLL ON MOBILE WHEN CHATBOT IS OPEN
+  // Prevent background scroll on mobile
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'
@@ -32,7 +39,6 @@ export default function Chatbot () {
       document.body.style.overflow = ''
       document.body.style.touchAction = ''
     }
-
     return () => {
       document.body.style.overflow = ''
       document.body.style.touchAction = ''
@@ -62,9 +68,9 @@ export default function Chatbot () {
     }, 2200)
   }
 
-  const handleSend = async e => {
-    e.preventDefault()
-    const userText = input.trim()
+  // Helper function to send messages from both form submit and suggestion chip clicks
+  const processUserQuery = async queryText => {
+    const userText = queryText.trim()
     if (!userText || loading || isClosing) return
 
     if (step === 'ASK_NAME') {
@@ -75,7 +81,8 @@ export default function Chatbot () {
         { sender: 'user', text: capturedName },
         {
           sender: 'bot',
-          text: `Pleased to meet you, ${capturedName}! As Dipesh's AI assistant, I can detail his full-stack MERN expertise, production work, or contact info. What would you like to know?`
+          text: `Pleased to meet you, ${capturedName}! What would you like to know about Dipesh?`,
+          suggestions: DEFAULT_SUGGESTIONS
         }
       ])
       setStep('CHAT')
@@ -106,9 +113,7 @@ export default function Chatbot () {
         body: JSON.stringify({ message: userText, userName })
       })
 
-      if (!res.ok) {
-        throw new Error(`Server status: ${res.status}`)
-      }
+      if (!res.ok) throw new Error(`Server error: ${res.status}`)
 
       const data = await res.json()
 
@@ -125,30 +130,44 @@ export default function Chatbot () {
           triggerAutoClose(
             `Thank you for connecting with Dipesh's portfolio, ${
               userName || 'friend'
-            }! Closing chat for now. Feel free to re-open if you need anything else.`
+            }! Feel free to re-open if you need anything else.`
           )
         } else {
           setMessages(prev => [
             ...prev,
             {
               sender: 'bot',
-              text: `${data.reply} (Attempt ${newCount}/3)`
+              text: `${
+                data.reply ||
+                "I didn't quite catch that. Try asking about one of these topics:"
+              } (Attempt ${newCount}/3)`,
+              suggestions: data.suggestions || DEFAULT_SUGGESTIONS
             }
           ])
         }
       }
     } catch (err) {
-      console.error('Chatbot fetch error:', err)
+      console.error('Chatbot error:', err)
       setMessages(prev => [
         ...prev,
         {
           sender: 'bot',
-          text: 'Error connecting to AI service. Please try again.'
+          text: 'Error connecting to AI service. Try clicking one of the suggested topics below:',
+          suggestions: DEFAULT_SUGGESTIONS
         }
       ])
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleSend = e => {
+    e.preventDefault()
+    processUserQuery(input)
+  }
+
+  const handleChipClick = suggestion => {
+    processUserQuery(suggestion)
   }
 
   return (
@@ -186,13 +205,31 @@ export default function Chatbot () {
 
             <div className={styles.chatMessages}>
               {messages.map((m, idx) => (
-                <div
-                  key={idx}
-                  className={`${styles.msg} ${
-                    m.sender === 'user' ? styles.userMsg : styles.botMsg
-                  }`}
-                >
-                  {m.text}
+                <div key={idx} className={styles.msgContainer}>
+                  <div
+                    className={`${styles.msg} ${
+                      m.sender === 'user' ? styles.userMsg : styles.botMsg
+                    }`}
+                  >
+                    {m.text}
+                  </div>
+
+                  {/* Render Clickable Keyword Chips */}
+                  {m.suggestions && m.suggestions.length > 0 && (
+                    <div className={styles.chipGroup}>
+                      {m.suggestions.map((chip, chipIdx) => (
+                        <button
+                          key={chipIdx}
+                          type='button'
+                          className={styles.chipBtn}
+                          onClick={() => handleChipClick(chip)}
+                          disabled={loading || isClosing}
+                        >
+                          {chip}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
 
