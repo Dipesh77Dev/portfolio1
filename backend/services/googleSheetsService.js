@@ -15,7 +15,7 @@ const formatTimeSpent = seconds => {
   return result.trim()
 }
 
-// Helper function to format date/time nicely (e.g., "28/09/2026, 01:25 PM")
+// Helper function to format date & time in IST
 const formatTimestamp = () => {
   return new Date().toLocaleString('en-IN', {
     timeZone: 'Asia/Kolkata',
@@ -49,11 +49,10 @@ const appendToGoogleSheet = async data => {
 
     const sheets = google.sheets({ version: 'v4', auth })
 
-    // Append columns: Timestamp, IP Address, City, Country, Device & OS, Time Spent, Visit Count
+    // TARGET: VisitorTrack tab across columns A to G
     await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: 'VisitorTrack!A:H',
-      // range: 'Sheet1!A:G',
+      range: 'VisitorTrack!A:G',
       valueInputOption: 'USER_ENTERED',
       resource: {
         values: [
@@ -69,7 +68,7 @@ const appendToGoogleSheet = async data => {
         ]
       }
     })
-    console.log('Data successfully pushed to Google Sheet')
+    console.log('Data successfully pushed to Google Sheet (VisitorTrack)')
   } catch (error) {
     console.error('Google Sheet Append Error:', error.message)
   }
