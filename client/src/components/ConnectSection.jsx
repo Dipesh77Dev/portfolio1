@@ -13,6 +13,9 @@ const INITIAL_STATE = [
   }
 ]
 
+const API_URL =
+  import.meta.env.VITE_API_URL || 'https://dipesh-portfolio-api.onrender.com'
+
 export default function ConnectSection () {
   const sectionRef = useRef(null)
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
