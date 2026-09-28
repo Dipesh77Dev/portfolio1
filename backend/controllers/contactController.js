@@ -1,40 +1,25 @@
 const Contact = require('../models/Contact')
-const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
-// const twilio = require('twilio');
+const { Resend } = require('resend')
 
-// Initialize Twilio Client
-// const twilioClient = twilio(
-//   process.env.TWILIO_ACCOUNT_SID,
-//   process.env.TWILIO_AUTH_TOKEN
-// );
+// Initialize Resend Client (uses HTTPS - 100% compatible with Render)
+const resend = new Resend(process.env.RESEND_API_KEY)
 
-// Setup Nodemailer Transporter
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-})
+// Setup Google Sheets Client
+const getGoogleSheetsClient = () => {
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY
+    ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n')
+    : undefined
 
-// Setup Google Sheets Auth
-const getGoogleSheetsClient = async () => {
-
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY 
-  ? process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n') 
-  : undefined;
-  
   const auth = new google.auth.GoogleAuth({
     credentials: {
       client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      private_key: privateKey,
+      private_key: privateKey
     },
     scopes: ['https://www.googleapis.com/auth/spreadsheets']
   })
 
-  const client = await auth.getClient()
-  return google.sheets({ version: 'v4', auth: client })
+  return google.sheets({ version: 'v4', auth })
 }
 
 exports.submitContactForm = async (req, res) => {
@@ -47,65 +32,51 @@ exports.submitContactForm = async (req, res) => {
         .json({ success: false, message: 'All fields are required.' })
     }
 
-    // 1. SAVE TO MONGODB DATABASE
-    const newContact = await Contact.create({ name, email, message })
     const formattedDate = new Date().toLocaleString('en-IN', {
       timeZone: 'Asia/Kolkata'
     })
 
-    // 2. SEND EMAIL NOTIFICATION VIA NODEMAILER
-    const mailOptions = {
-      from: `"Portfolio Alert" <${process.env.EMAIL_USER}>`,
-      to: process.env.EMAIL_USER,
-      subject: `🚀 New Contact Form Submission from ${name}`,
-      html: `
-        <h3>New Portfolio Connection</h3>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong> ${message}</p>
-        <p><strong>Submitted At:</strong> ${formattedDate}</p>      
-        `
+    // 1. SAVE TO MONGODB DATABASE
+    const newContact = await Contact.create({ name, email, message })
+
+    // 2. APPEND TO GOOGLE SHEETS
+    if (process.env.GOOGLE_SHEET_ID) {
+      try {
+        const sheets = getGoogleSheetsClient()
+        await sheets.spreadsheets.values.append({
+          spreadsheetId: process.env.GOOGLE_SHEET_ID,
+          range: 'FormSubmissions!A:D',
+          valueInputOption: 'USER_ENTERED',
+          requestBody: {
+            values: [[name, email, message, formattedDate]]
+          }
+        })
+      } catch (sheetErr) {
+        console.error('Google Sheets Error:', sheetErr.message)
+      }
     }
 
-    const emailPromise = transporter.sendMail(mailOptions).catch(err => {
-      console.error('Nodemailer Error:', err.message)
-    })
+    // 3. SEND INSTANT EMAIL VIA RESEND HTTPS API
+    if (process.env.RESEND_API_KEY) {
+      try {
+        await resend.emails.send({
+          from: 'Portfolio Contact <onboarding@resend.dev>',
+          to: 'rajpersonal777@gmail.com',
+          subject: `🚀 New Contact Form Submission from ${name}`,
+          html: `
+            <h3>New Portfolio Connection</h3>
+            <p><strong>Name:</strong> ${name}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Message:</strong> ${message}</p>
+            <p><strong>Submitted At:</strong> ${formattedDate}</p>
+          `
+        })
+      } catch (emailErr) {
+        console.error('Resend Email Error:', emailErr.message)
+      }
+    }
 
-    // 3. APPEND ROW TO GOOGLE SHEET
-    const sheetsPromise = (async () => {
-      if (!process.env.GOOGLE_SHEET_ID) return;
-      const sheets = await getGoogleSheetsClient()
-      await sheets.spreadsheets.values.append({
-        spreadsheetId: process.env.GOOGLE_SHEET_ID,
-        range: 'FormSubmissions!A:D',
-        valueInputOption: 'USER_ENTERED',
-        requestBody: {
-          values: [
-            [
-              name,
-              email,
-              message,
-              formattedDate
-              // new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
-            ]
-          ]
-        }
-      })
-    })().catch(err => {
-      console.error('Google Sheets Error:', err.message);
-    });
-
-    // 4. SEND WHATSAPP MESSAGE VIA TWILIO
-    // const whatsappPromise = twilioClient.messages.create({
-    //   from: process.env.TWILIO_WHATSAPP_NUMBER,
-    //   to: process.env.MY_WHATSAPP_NUMBER,
-    //   body: `📩 *New Portfolio Lead!*\n\n*Name:* ${name}\n*Email:* ${email}\n*Message:* ${message}`
-    // });
-
-    // Execute Notifications Concurrently
-    await Promise.allSettled([emailPromise, sheetsPromise])
-    // await Promise.allSettled([emailPromise, sheetsPromise, whatsappPromise]);
-
+    // 4. INSTANT RESPONSE TO FRONTEND (< 1 SECOND)
     return res.status(200).json({
       success: true,
       message: 'Message sent successfully!',

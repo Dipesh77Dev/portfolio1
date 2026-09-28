@@ -2,3 +2,4 @@ node_modules
 imp.txt
 frontend1
 .env
+backend/.env
